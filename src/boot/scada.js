@@ -1,0 +1,217 @@
+"use strict";
+import mqtt from "mqtt";
+const projectName = "OTIS5";
+
+export class ScadaClient {
+  constructor(bus) {
+    this.innerbus = bus;
+  }
+
+  callrpc = function(worker, functionname, data) {
+    var uid = this.createuid();
+    var topic =
+      "Scada/to/" +
+      worker +
+      "/from/" +
+      this.options.clientid +
+      "/" +
+      functionname +
+      "/req/" +
+      uid;
+
+    this.innerclient.publish(topic, data, {
+      qos: 2,
+      retain: false
+    });
+    return uid;
+  };
+
+  connect(host, username, password) {
+    let offlinewillmessage = {
+      status: "disconnect",
+      timestamp: new Date().toISOString()
+    };
+    const workername = "WebScada";
+    this.options = {
+      username: username,
+      password: password,
+      clientid: workername,
+      will: {
+        topic: projectName + "/" + workername + "-" + username + "/Status",
+        payload: JSON.stringify(offlinewillmessage),
+        qos: 2,
+        retain: true
+      }
+    };
+
+    var client = mqtt.connect(host, this.options);
+    this.innerclient = client;
+    var self = this;
+    client.on("error", function(error) {
+      console.log(error);
+      self.innerbus.$emit("ErrorReceived", {
+        error
+      });
+    });
+
+    client.on("connect", function() {
+      self.innerbus.$emit("WorkerStatusChanged", {
+        isconnected: true
+      });
+      client.subscribe("MQTT/#", function() {});
+      client.subscribe(projectName + "/#", function() {});
+      client.subscribe(
+        "Scada/to/" + this.options.clientid + "/from/+/+/+/+",
+        function() {}
+      );
+      let onlinewillmessage = {
+        status: "online",
+        timestamp: new Date().toISOString()
+      };
+      client.publish(
+        "MQTT/" +
+          this.options.clientid +
+          "-" +
+          this.options.username +
+          "/Status",
+        JSON.stringify(onlinewillmessage),
+        {
+          qos: 2,
+          retain: true
+        }
+      );
+    });
+    client.on("offline", function() {
+      self.innerbus.$emit("WorkerStatusChanged", {
+        isconnected: false
+      });
+    });
+    var workerlist = {};
+    this.workers = workerlist;
+    client.on("message", function(topic, message) {
+      var parsedtag = topic.split("/");
+      if (parsedtag[0] === "MQTT") {
+        var worker = parsedtag[1].split("-")[0];
+        var user = parsedtag[1].split("-")[1];
+        if (message.length == 0) {
+          self.innerbus.$emit("OtherWorkersStatus", {
+            uniquename: worker + user,
+            workername: worker,
+            username: user,
+            status: "deleted"
+          });
+        } else {
+          var messagejson = JSON.parse(message);
+          self.innerbus.$emit("OtherWorkersStatus", {
+            uniquename: worker + user,
+            workername: worker,
+            username: user,
+            timestamp: new Date(messagejson.timestamp),
+            status: messagejson.status
+          });
+        }
+      }
+
+      if (parsedtag[0] === "Scada" && parsedtag.length == 8) {
+        if (message.length != 0) {
+          client.publish(topic, "", {
+            qos: 2,
+            retain: true
+          });
+          var uid = parsedtag[7];
+          self.innerbus.$emit("RpcResult", {
+            uid,
+            message: JSON.parse(message)
+          });
+        }
+      }
+      //MATP/Ventilation/Jetfan/T4KJF01/IsFailed/Online
+      if (
+        parsedtag[0] === projectName &&
+        parsedtag.length == 6 &&
+        parsedtag[5] === "Online"
+      ) {
+        if (message.length != 0) {
+          self.innerbus.$emit("VDChanged", {
+            virtualdevice: [
+              parsedtag[0],
+              parsedtag[1],
+              parsedtag[2],
+              parsedtag[3]
+            ].join("/"),
+            property: parsedtag[4],
+            message: JSON.parse(message)
+          });
+        }
+      }
+      if (
+        parsedtag[0] === projectName &&
+        parsedtag.length == 6 &&
+        parsedtag[5] === "Alarm"
+      ) {
+        if (message.length != 0) {
+          var jsonmessage = JSON.parse(message);
+          self.innerbus.$emit("AlarmReceived", {
+            start: jsonmessage.Value.Start,
+            deviceaddress: [
+              parsedtag[0],
+              parsedtag[1],
+              parsedtag[2],
+              parsedtag[3]
+            ].join("/"),
+            systemname: parsedtag[1],
+            devicename: parsedtag[3],
+            location: jsonmessage.Value.Location,
+            message: jsonmessage.Value.Message,
+            ackdate: jsonmessage.Value.Acked,
+            ackby: jsonmessage.Value.AckedBy,
+            enddate: jsonmessage.Value.Ended,
+            status: jsonmessage.Value.Status,
+            id: jsonmessage.Value.Id,
+            priority: jsonmessage.Value.Priority
+          });
+        }
+      }
+
+      if (
+        parsedtag[0] === projectName &&
+        parsedtag.length == 6 &&
+        parsedtag[5] === "Constant"
+      ) {
+        if (message.length != 0) {
+          var jsonmessage = JSON.parse(message);
+          self.innerbus.$emit("ConstantReceived", {
+            virtualdevice: [
+              parsedtag[0],
+              parsedtag[1],
+              parsedtag[2],
+              parsedtag[3]
+            ].join("/"),
+            property: parsedtag[4],
+            message: JSON.parse(message)
+          });
+        }
+      }
+    });
+  }
+
+  createuid() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
+      var r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
+  removeworker(worker) {
+    var topic = "MQTT/" + worker.workername + "-" + worker.username + "/Status";
+    this.innerclient.publish(topic, "", {
+      qos: 2,
+      retain: true
+    });
+  }
+
+  getworkers() {
+    return this.workers;
+  }
+}
