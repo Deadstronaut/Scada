@@ -45,7 +45,11 @@
 						v-else
 						color="warning"
 						text-color="white"
-					/>
+					>
+						<q-tooltip>
+							Worker Suspend
+						</q-tooltip>
+					</q-avatar>
 
 				</q-item-section>
 
