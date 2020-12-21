@@ -1,5 +1,4 @@
 <template>
-
 	<div class="q-pa-md q-gutter-none">
 		<q-list
 			bordered
@@ -9,24 +8,15 @@
 		>
 			<q-item-label header>Workers</q-item-label>
 			<q-separator />
-			<q-item
-				:key="worker.Key"
-				v-for="worker in getAllWorkers"
-				v-ripple
-			>
-				<q-item-section
-					avatar
-					top
-				>
+			<q-item :key="worker.Key" v-for="worker in getAllWorkers" v-ripple>
+				<q-item-section avatar top>
 					<q-avatar
 						icon="check_circle"
 						v-if="worker.status === 'online'"
 						color="positive"
 						text-color="white"
 					>
-						<q-tooltip>
-							Worker Connected
-						</q-tooltip>
+						<q-tooltip> Worker Connected </q-tooltip>
 					</q-avatar>
 
 					<q-avatar
@@ -35,9 +25,7 @@
 						color="negative"
 						text-color="white"
 					>
-						<q-tooltip>
-							Worker Disconnected
-						</q-tooltip>
+						<q-tooltip> Worker Disconnected </q-tooltip>
 					</q-avatar>
 
 					<q-avatar
@@ -46,17 +34,18 @@
 						color="warning"
 						text-color="white"
 					>
-						<q-tooltip>
-							Worker Suspend
-						</q-tooltip>
+						<q-tooltip> Worker Offline </q-tooltip>
 					</q-avatar>
-
 				</q-item-section>
 
 				<q-item-section>
-					<q-item-label lines="1">{{ worker.workername }}</q-item-label>
+					<q-item-label lines="1">{{
+						worker.workername
+					}}</q-item-label>
 					<q-item-label caption>
-						<datetimeview :inputDatetime="worker.timestamp"></datetimeview>
+						<datetimeview
+							:inputDatetime="worker.timestamp"
+						></datetimeview>
 					</q-item-label>
 				</q-item-section>
 				<q-btn
@@ -66,10 +55,7 @@
 					color="negative"
 					icon="delete_forever"
 				>
-					<q-dialog
-						v-model="confirm"
-						persistent
-					>
+					<q-dialog v-model="confirm" persistent>
 						<q-card-actions align="right">
 							<q-btn
 								flat
@@ -85,9 +71,7 @@
 							/>
 						</q-card-actions>
 					</q-dialog>
-					<q-tooltip>
-						Remove Worker
-					</q-tooltip>
+					<q-tooltip> Remove Worker </q-tooltip>
 				</q-btn>
 				<q-item-section side>
 					{{ worker.username }}
@@ -95,7 +79,6 @@
 			</q-item>
 		</q-list>
 	</div>
-
 </template>
 
 <script>

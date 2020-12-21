@@ -1,20 +1,9 @@
 <template>
 	<div class="q-pa-md doc-container">
-		<q-list
-			bordered
-			padding
-			class="outsideBox"
-			style="max-width: 2440px"
-		>
+		<q-list bordered padding class="outsideBox" style="max-width: 2440px">
 			<div class="row">
-				<div
-					class="col"
-					align="center"
-				>
-					<div
-						class="btnBoxWorker"
-						tabindex="0"
-					>
+				<div class="col" align="center">
+					<div class="btnBoxWorker" tabindex="0">
 						<q-btn-dropdown
 							padding="xs lg"
 							color=""
@@ -55,26 +44,12 @@
 						</q-btn-dropdown>
 					</div>
 				</div>
-				<div
-					class="col"
-					align="center"
-				>
-					<q-btn
-						rounded
-						color=""
-						label="BENJI BUTTON"
-						class=""
-					/>
+				<div class="col" align="center">
+					<q-btn rounded color="" label="BENJI BUTTON" class="" />
 				</div>
 
-				<div
-					class="col"
-					align="center"
-				>
-					<div
-						class="btnBoxFunctions"
-						tabindex="0"
-					>
+				<div class="col" align="center">
+					<div class="btnBoxFunctions" tabindex="0">
 						<q-btn-dropdown
 							padding="xs lg"
 							color=""
@@ -116,6 +91,7 @@
 					</div>
 				</div>
 			</div>
+			<!-- First Box -->
 			<div class="q-pa-md q-gutter-none">
 				<q-list
 					bordered
@@ -125,7 +101,7 @@
 				>
 				</q-list>
 			</div>
-
+			<!-- Second Box -->
 			<div class="q-pa-md q-gutter-none">
 				<q-list
 					bordered
@@ -136,7 +112,6 @@
 				</q-list>
 			</div>
 		</q-list>
-
 	</div>
 </template>
 

@@ -63,10 +63,16 @@ const routes = [{
                     import ("pages/AlarmClock.vue")
             },
             {
-                path: "/deneme",
-                name: "Deneme",
+                path: "/deneme1",
+                name: "Deneme I",
                 component: () =>
-                    import ("pages/Deneme.vue")
+                    import ("pages/Deneme1.vue")
+            },
+            {
+                path: "/deneme2",
+                name: "Deneme II",
+                component: () =>
+                    import ("pages/Deneme2.vue")
             },
         ]
     },

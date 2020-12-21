@@ -1,7 +1,7 @@
 <template>
 	<q-card style="min-width: 330px">
 		<q-card-section class="q-pb-none">
-			<div class="text-h6">{{ $t("scadalogin") }}</div>
+			<div class="text-h6">{{ $t("Scada Login") }}</div>
 		</q-card-section>
 
 		<q-card-section>
@@ -10,7 +10,7 @@
 					dense
 					v-model="LoginData.Server"
 					:label="$t('server')"
-					:rules="[val => !!val || 'Field is required']"
+					:rules="[(val) => !!val || 'Field is required']"
 				>
 					<template v-slot:prepend>
 						<q-icon name="dns" />
@@ -22,7 +22,7 @@
 					dense
 					:label="$t('pool')"
 					v-model="LoginData.Pool"
-					:rules="[val => !!val || 'Field is required']"
+					:rules="[(val) => !!val || 'Field is required']"
 				>
 					<template v-slot:prepend>
 						<q-icon name="group_work" />
@@ -34,7 +34,7 @@
 					dense
 					:label="$t('username')"
 					v-model="LoginData.Username"
-					:rules="[val => !!val || 'Field is required']"
+					:rules="[(val) => !!val || 'Field is required']"
 				>
 					<template v-slot:prepend>
 						<q-icon name="face" />
@@ -47,7 +47,7 @@
 					type="password"
 					:label="$t('password')"
 					v-model="LoginData.Password"
-					:rules="[val => !!val || $t('fieldisrequired')]"
+					:rules="[(val) => !!val || $t('Field is required')]"
 				>
 					<template v-slot:prepend>
 						<q-icon name="vpn_key" />
@@ -55,10 +55,7 @@
 				</q-input>
 			</div>
 		</q-card-section>
-		<q-card-actions
-			align="right"
-			class="text-primary q-pt-none "
-		>
+		<q-card-actions align="right" class="text-primary q-pt-none">
 			<q-btn
 				color="primary"
 				icon-right="send"

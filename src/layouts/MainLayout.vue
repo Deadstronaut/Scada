@@ -10,11 +10,7 @@
 					aria-label="Menu"
 					@click="leftDrawerOpen = !leftDrawerOpen"
 				/>
-				<q-dialog
-					v-model="isDisconnected"
-					persistent
-					dense
-				>
+				<q-dialog v-model="isDisconnected" persistent dense>
 					<logincard></logincard>
 				</q-dialog>
 				<q-toolbar-title>{{ $t(currentRouteName) }}</q-toolbar-title>
@@ -30,22 +26,14 @@
 						options-dense
 					/>
 					<q-item-section avatar>
-						<q-avatar
-							size="lg"
-							color="brown-7"
-							text-color="white"
-						>
+						<q-avatar size="lg" color="brown-7" text-color="white">
 							{{ CurrentUserFullname.getInitials() }}
-							<q-badge
-								v-if="isDisconnected"
-								color="red"
-								floating
-							>D</q-badge>
-							<q-badge
-								v-else
-								color="light-green-9"
-								floating
-							>C</q-badge>
+							<q-badge v-if="isDisconnected" color="red" floating
+								>D</q-badge
+							>
+							<q-badge v-else color="light-green-9" floating
+								>C</q-badge
+							>
 						</q-avatar>
 					</q-item-section>
 					<q-item-section>
@@ -53,15 +41,8 @@
 						<q-item-label caption>Administrator</q-item-label>
 					</q-item-section>
 
-					<q-item-section
-						v-if="isConnected"
-						side
-						avatar
-					>
-						<q-icon
-							class="q-pr-none"
-							name="exit_to_app"
-						/>
+					<q-item-section v-if="isConnected" side avatar>
+						<q-icon class="q-pr-none" name="exit_to_app" />
 					</q-item-section>
 				</q-item>
 			</q-toolbar>
@@ -74,11 +55,8 @@
 			:width="250"
 			:breakpoint="600"
 		>
-			<div class=" q-pa-sm glossy">
-				<img
-					src="~assets/logosav.png"
-					style="max-width:150px;"
-				/>
+			<div class="q-pa-sm glossy">
+				<img src="~assets/logosav.png" style="max-width: 150px" />
 			</div>
 			<q-separator />
 			<q-list>
@@ -166,9 +144,14 @@
 						link: "/alarmclock",
 					},
 					{
-						title: "Deneme",
+						title: "Deneme I",
 						icon: "flaky",
-						link: "/deneme",
+						link: "/deneme1",
+					},
+					{
+						title: "Deneme II",
+						icon: "flaky",
+						link: "/deneme2",
 					},
 				],
 				lang: this.$i18n.locale,
