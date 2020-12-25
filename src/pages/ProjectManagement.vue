@@ -16,107 +16,87 @@
 					<q-tab name="sender" label="Sender" />
 					<q-tab name="contants" label="Constants" />
 				</q-tabs>
+				<q-card>
+					<q-tab-panels v-model="tab" animated>
+						<q-tab-panel name="virtualdevices">
+							<q-btn-group spread>
+								<q-btn
+									color=""
+									label="Load All"
+									icon="get_app"
+								/>
+								<q-btn
+									color=""
+									label="Send All"
+									icon="publish"
+								/>
+								<q-btn
+									color=""
+									label="Export File"
+									icon="cloud_download"
+								/>
+								<q-btn
+									color=""
+									label="Import File"
+									icon="cloud_upload"
+								/>
+							</q-btn-group>
 
-				<q-separator />
+							<virtualdevicelist></virtualdevicelist>
+						</q-tab-panel>
+					</q-tab-panels>
 
-				<q-tab-panels v-model="tab" animated>
-					<q-tab-panel name="virtualdevices">
-						<q-btn-group spread>
-							<q-btn color="" label="Load All" icon="get_app" />
-							<q-btn color="" label="Send All" icon="publish" />
-							<q-btn
-								color=""
-								label="Export File"
-								icon="cloud_download"
+					<q-separator />
+
+					<q-tabs
+						v-model="tab"
+						dense
+						class="text-grey"
+						active-color="primary"
+						indicator-color="primary"
+						align="justify"
+						narrow-indicator
+					>
+						<q-tab name="properties" label="Properties" />
+						<q-tab name="alarm" label="Alarm" />
+						<q-tab name="command" label="Command" />
+					</q-tabs>
+
+					<q-tab-panels v-model="tab" animated>
+						<q-tab-panel name="properties">
+							<q-table
+								title="TITLE"
+								dense
+								:data="propData"
+								:columns="properties"
+								row-key="name"
+								dark
 							/>
-							<q-btn
-								color=""
-								label="Import File"
-								icon="cloud_upload"
+						</q-tab-panel>
+
+						<q-tab-panel name="alarm">
+							<q-table
+								title="TITLE"
+								dense
+								:data="alarmsData"
+								:columns="alarms"
+								row-key="name"
+								dark
 							/>
-						</q-btn-group>
+						</q-tab-panel>
 
-						<virtualdevicelist></virtualdevicelist>
-					</q-tab-panel>
-
-					<q-tab-panel name="projectree">
-						<q-btn-group spread>
-							<q-btn color="" label="Load All" icon="get_app" />
-							<q-btn color="" label="Send All" icon="publish" />
-							<q-btn
-								color=""
-								label="Export File"
-								icon="cloud_download"
+						<q-tab-panel name="command">
+							<q-table
+								title="TITLE"
+								dense
+								:data="commandsData"
+								:columns="commands"
+								row-key="name"
+								dark
 							/>
-							<q-btn
-								color=""
-								label="Import File"
-								icon="cloud_upload"
-							/>
-						</q-btn-group>
-					</q-tab-panel>
-
-					<q-tab-panel name="Sender">
-						<div class="text-h6">Alarms</div>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					</q-tab-panel>
-
-					<q-tab-panel name="contants">
-						<div class="text-h6">Alarms</div>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					</q-tab-panel>
-				</q-tab-panels>
-			</q-card>
-
-			<q-card bordered>
-				<q-tabs
-					v-model="tab"
-					dense
-					class="text-grey"
-					active-color="primary"
-					indicator-color="primary"
-					align="justify"
-					narrow-indicator
-				>
-					<q-tab name="properties" label="Properties" />
-					<q-tab name="alarm" label="Alarm" />
-					<q-tab name="command" label="Command" />
-				</q-tabs>
-
-				<q-tab-panels v-model="tab" animated>
-					<q-tab-panel name="properties">
-						<q-table
-							title="TITLE"
-							dense
-							:data="propData"
-							:columns="properties"
-							row-key="name"
-							dark
-						/>
-					</q-tab-panel>
-
-					<q-tab-panel name="alarm">
-						<q-table
-							title="TITLE"
-							dense
-							:data="alarmsData"
-							:columns="alarms"
-							row-key="name"
-							dark
-						/>
-					</q-tab-panel>
-
-					<q-tab-panel name="command">
-						<q-table
-							title="TITLE"
-							dense
-							:data="commandsData"
-							:columns="commands"
-							row-key="name"
-							dark
-						/>
-					</q-tab-panel>
-				</q-tab-panels>
+						</q-tab-panel>
+					</q-tab-panels>
+				</q-card>
 			</q-card>
 		</div>
 	</div>
