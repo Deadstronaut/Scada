@@ -102,6 +102,33 @@
 						<q-tab name="alarm" label="Alarm" />
 						<q-tab name="command" label="Command" />
 					</q-tabs>
+
+					<q-tab-panels v-model="tab" animated>
+						<q-tab-panel name="projectree">
+							<q-btn-group spread>
+								<q-btn
+									color=""
+									label="Load All"
+									icon="get_app"
+								/>
+								<q-btn
+									color=""
+									label="Send All"
+									icon="publish"
+								/>
+								<q-btn
+									color=""
+									label="Export File"
+									icon="cloud_download"
+								/>
+								<q-btn
+									color=""
+									label="Import File"
+									icon="cloud_upload"
+								/>
+							</q-btn-group>
+						</q-tab-panel>
+					</q-tab-panels>
 				</q-card>
 			</q-card>
 		</div>
