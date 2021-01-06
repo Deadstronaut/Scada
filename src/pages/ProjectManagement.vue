@@ -127,8 +127,26 @@
 									icon="cloud_upload"
 								/>
 							</q-btn-group>
+							Name:
+							<q-input outlined v-model="text" label="Outlined" />
+							Alias:
+							<q-input outlined v-model="text" label="Outlined" />
+							<q-input outlined v-model="text" label="Outlined" />
 						</q-tab-panel>
 					</q-tab-panels>
+					<q-tabs
+						v-model="tab"
+						dense
+						:data="projectPropertiesData"
+						class="text-grey"
+						active-color="primary"
+						indicator-color="primary"
+						align="justify"
+						narrow-indicator
+						v-if="tab == 'projectree' || tab == 'projectProperties'"
+					>
+						<q-tab name="projectProperties" label="Properties2" />
+					</q-tabs>
 				</q-card>
 			</q-card>
 		</div>
@@ -146,7 +164,7 @@
 
 		data() {
 			return {
-				tab: "virtualdevices",
+				tab: "virtualdevices,projectree",
 				properties: [
 					{
 						name: "alias",
@@ -296,6 +314,51 @@
 					},
 				],
 				commandsData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+				projectProperties: [
+					{
+						name: "alias",
+						align: "left",
+						label: "Alias",
+						field: "alias",
+						sortable: true,
+					},
+					{
+						name: "name",
+						align: "center",
+						label: "Name",
+						field: "name",
+						sortable: true,
+					},
+					{
+						name: "inscadatype",
+						align: "center",
+						label: "InScadaType",
+						field: "inscadatype",
+						sortable: true,
+					},
+					{
+						name: "intarget",
+						align: "center",
+						label: "InTarget",
+						field: "intarget",
+						sortable: true,
+					},
+					{
+						name: "condition",
+						align: "center",
+						label: "Condition",
+						field: "condition",
+						sortable: true,
+					},
+					{
+						name: "priority",
+						align: "center",
+						label: "Priority",
+						field: "priority",
+						sortable: true,
+					},
+				],
+				projectPropertiesData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			};
 		},
 	};
