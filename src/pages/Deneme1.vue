@@ -17,88 +17,147 @@
 					<q-tab name="contants" label="Constants" />
 				</q-tabs>
 
-				<q-separator />
+				<q-card>
+					<q-tab-panels v-model="tab" animated>
+						<q-tab-panel name="virtualdevices">
+							<q-btn-group spread>
+								<q-btn
+									color=""
+									label="Load All"
+									icon="get_app"
+								/>
+								<q-btn
+									color=""
+									label="Send All"
+									icon="publish"
+								/>
+								<q-btn
+									color=""
+									label="Export File"
+									icon="cloud_download"
+								/>
+								<q-btn
+									color=""
+									label="Import File"
+									icon="cloud_upload"
+								/>
+							</q-btn-group>
 
-				<q-tab-panels v-model="tab" animated>
-					<q-tab-panel name="virtualdevices">
-						<q-btn-group spread>
-							<q-btn color="" label="Load All" icon="get_app" />
-							<q-btn color="" label="Send All" icon="publish" />
-							<q-btn
-								color=""
-								label="Export File"
-								icon="cloud_download"
+							<virtualdevicelist></virtualdevicelist>
+						</q-tab-panel>
+					</q-tab-panels>
+
+					<q-separator />
+
+					<q-tab-panels v-model="tab" animated>
+						<q-tab-panel name="properties">
+							<q-table
+								title="TITLE"
+								dense
+								:data="propData"
+								:columns="properties"
+								row-key="name"
+								dark
 							/>
-							<q-btn
-								color=""
-								label="Import File"
-								icon="cloud_upload"
+						</q-tab-panel>
+
+						<q-tab-panel name="alarm">
+							<q-table
+								title="TITLE"
+								dense
+								:data="alarmsData"
+								:columns="alarms"
+								row-key="name"
+								dark
 							/>
-						</q-btn-group>
+						</q-tab-panel>
 
-						<virtualdevicelist></virtualdevicelist>
-					</q-tab-panel>
-
-					<q-tab-panel name="projectree">
-						<q-btn-group spread>
-							<q-btn color="" label="Load All" icon="get_app" />
-							<q-btn color="" label="Send All" icon="publish" />
-							<q-btn
-								color=""
-								label="Export File"
-								icon="cloud_download"
+						<q-tab-panel name="command">
+							<q-table
+								title="TITLE"
+								dense
+								:data="commandsData"
+								:columns="commands"
+								row-key="name"
+								dark
 							/>
-							<q-btn
-								color=""
-								label="Import File"
-								icon="cloud_upload"
-							/>
-						</q-btn-group>
-					</q-tab-panel>
+						</q-tab-panel>
+					</q-tab-panels>
+					<q-tabs
+						v-model="tab"
+						dense
+						class="text-grey"
+						active-color="primary"
+						indicator-color="primary"
+						align="justify"
+						narrow-indicator
+						v-if="
+							tab == 'virtualdevices' ||
+							tab == 'properties' ||
+							tab == 'alarm' ||
+							tab == 'command'
+						"
+					>
+						<q-tab name="properties" label="Properties" />
+						<q-tab name="alarm" label="Alarm" />
+						<q-tab name="command" label="Command" />
+					</q-tabs>
 
-					<q-tab-panel name="Sender">
-						<div class="text-h6">Alarms</div>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					</q-tab-panel>
-
-					<q-tab-panel name="contants">
-						<div class="text-h6">Alarms</div>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					</q-tab-panel>
-				</q-tab-panels>
-			</q-card>
-
-			<q-card>
-				<q-tab-panels v-model="tab" animated>
-					<q-tab-panel name="mails">
-						<div class="text-h6">Mails</div>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					</q-tab-panel>
-
-					<q-tab-panel name="alarms">
-						<div class="text-h6">Alarms</div>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					</q-tab-panel>
-
-					<q-tab-panel name="movies">
-						<div class="text-h6">Movies</div>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-					</q-tab-panel>
-				</q-tab-panels>
-
-				<q-separator />
-
-				<q-tabs
-					v-model="tab"
-					dense
-					align="justify"
-					narrow-indicator
-					dark
-				>
-					<q-tab name="mails" label="Mails" />
-					<q-tab name="alarms" label="Alarms" />
-					<q-tab name="movies" label="Movies" />
-				</q-tabs>
+					<q-tab-panels v-model="tab" animated>
+						<q-tab-panel name="projectree">
+							<q-btn-group spread>
+								<q-btn
+									color=""
+									label="Load All"
+									icon="get_app"
+								/>
+								<q-btn
+									color=""
+									label="Send All"
+									icon="publish"
+								/>
+								<q-btn
+									color=""
+									label="Export File"
+									icon="cloud_download"
+								/>
+								<q-btn
+									color=""
+									label="Import File"
+									icon="cloud_upload"
+								/>
+							</q-btn-group>
+							Name:
+							<q-input outlined v-model="text" label="Outlined" />
+							Alias:
+							<q-input outlined v-model="text" label="Outlined" />
+							<q-input outlined v-model="text" label="Outlined" />
+						</q-tab-panel>
+					</q-tab-panels>
+					<q-tabs
+						v-model="tab"
+						dense
+						:data="projectPropertiesData"
+						class="text-grey"
+						active-color="primary"
+						indicator-color="primary"
+						align="justify"
+						narrow-indicator
+						v-if="tab == 'projectree' || tab == 'projectProperties'"
+					>
+						<q-table
+							title="TITLE"
+							dense
+							:data="projectPropertiesData"
+							:columns="projectProperties"
+							row-key="name"
+							dark
+						/>
+						
+						<q-tab name="projectProperties" label="Properties2" />
+						
+					</q-tabs>
+				</q-card>
 			</q-card>
 		</div>
 	</div>
@@ -115,7 +174,7 @@
 
 		data() {
 			return {
-				tab: "virtualdevices",
+				tab: "virtualdevices,projectree",
 				properties: [
 					{
 						name: "alias",
@@ -265,6 +324,51 @@
 					},
 				],
 				commandsData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+				projectProperties: [
+					{
+						name: "alias",
+						align: "left",
+						label: "Alias",
+						field: "alias",
+						sortable: true,
+					},
+					{
+						name: "name",
+						align: "center",
+						label: "Name",
+						field: "name",
+						sortable: true,
+					},
+					{
+						name: "inscadatype",
+						align: "center",
+						label: "InScadaType",
+						field: "inscadatype",
+						sortable: true,
+					},
+					{
+						name: "intarget",
+						align: "center",
+						label: "InTarget",
+						field: "intarget",
+						sortable: true,
+					},
+					{
+						name: "condition",
+						align: "center",
+						label: "Condition",
+						field: "condition",
+						sortable: true,
+					},
+					{
+						name: "priority",
+						align: "center",
+						label: "Priority",
+						field: "priority",
+						sortable: true,
+					},
+				],
+				projectPropertiesData: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			};
 		},
 	};

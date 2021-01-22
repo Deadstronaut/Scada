@@ -16,6 +16,7 @@
 					<q-tab name="sender" label="Sender" />
 					<q-tab name="contants" label="Constants" />
 				</q-tabs>
+
 				<q-card>
 					<q-tab-panels v-model="tab" animated>
 						<q-tab-panel name="virtualdevices">
@@ -56,6 +57,12 @@
 						indicator-color="primary"
 						align="justify"
 						narrow-indicator
+						v-if="
+							tab == 'virtualdevices' ||
+							tab == 'properties' ||
+							tab == 'alarm' ||
+							tab == 'command'
+						"
 					>
 						<q-tab name="properties" label="Properties" />
 						<q-tab name="alarm" label="Alarm" />
