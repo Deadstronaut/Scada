@@ -172,7 +172,7 @@
 
 		data() {
 			return {
-				tab: "virtualdevices,projectree",
+				tab: "virtualdevices",
 				properties: [
 					{
 						name: "alias",
