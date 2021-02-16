@@ -145,15 +145,17 @@
 						narrow-indicator
 						v-if="tab == 'projectree' || tab == 'projectProperties'"
 					>
-						<q-table
-							title="TITLE"
-							dense
-							:data="projectPropertiesData"
-							:columns="projectProperties"
-							row-key="name"
-							dark
-						/>
-						<q-tab name="projectProperties" label="Properties2" />
+						<q-tab-panel name="properties"></q-tab-panel>
+							<q-table
+								title="TITLE"
+								dense
+								:data="projectPropertiesData"
+								:columns="projectProperties"
+								row-key="name"
+								dark
+							/>
+						</q-tab-panel>
+						<!-- <q-tab name="projectProperties" label="Properties2" /> -->
 					</q-tabs>
 				</q-card>
 			</q-card>
